@@ -2,23 +2,23 @@ import ApplicationForm from "./components/ApplicationForm";
 
 export default function App() {
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 p-4">
-      {/* Coluna Esquerda */}
-      <div className="flex flex-col justify-between p-8 bg-white ">
-        {/* Header */}
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 p-5">
+      {/* CONTAINER ESQUERDA */}
+      <div className="flex flex-col justify-between p-7 bg-white ">
+        {/* HEADER */}
         <header className="flex justify-between items-center mb-8">
-          <img src="/logo.png" alt="Ecto" className="h-8" />
+          <img src="/logo-ecto.png" alt="Ecto" className="h-8" />
           <a href="#" className="text-sm text-black">
             Falar com um especialista
           </a>
         </header>
 
-        {/* Formulário */}
+        {/* FORMULARIO */}
         <main className="flex-grow flex items-center justify-center">
           <ApplicationForm />
         </main>
 
-        {/* Footer */}
+        {/* FOOTER */}
         <footer className="flex justify-between text-xs mt-8 font-">
           <a href="#" className="text-black">Políticas de privacidade</a>
           <a href="#" className="text-black">Termos de uso</a>
@@ -26,14 +26,17 @@ export default function App() {
         </footer>
       </div>
 
-      {/* Coluna Direita */}
-      <div className="lg:flex items-center justify-center bg-[url('imagem.png')] bg-cover bg-center rounded-xl bg-linear-65 from-black to-blue-600 p-14">
+      {/* CONTAINER DIREITA */}
+      <div className="lg:flex items-end-safe justify-center bg-[url('imagem.png')] bg-cover bg-center rounded-xl p-10 relative">
 
-        <div className="text-left text-justify text-white">
-          <h2 className="text-2xl font-bold mb-4">Tudo em um só lugar</h2>
+        {/* EFEITO GRADIANTE */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101b2b] to-transparent rounded-xl"></div>
+
+        <div className="relative text-left text-white max-w-3xl">
+          <h2 className="text-4xl font-bold mb-4">Tudo em um só lugar</h2>
           <p className="text-sm opacity-90">
             Tenha visibilidade total da operação de SEO, mídia e conteúdo com a
-            Ecto Tools — nossa plataforma exclusiva para acompanhar entregas,
+            Ecto Tools - nossa plataforma exclusiva para acompanhar entregas,
             dados e performance em tempo real.
           </p>
         </div>

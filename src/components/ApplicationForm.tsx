@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 interface FormData {
@@ -9,22 +10,21 @@ interface FormData {
 }
 
 export default function ApplicationForm() {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirm_password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm<FormData>();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // mostrar/ocultar senhas
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (formData.password !== formData.confirm_password) {
+  const onSubmit = async (data: FormData) => {
+    // Verifica se as senhas coincidem antes de enviar
+    if (data.password !== data.confirm_password) {
       alert("As senhas não coincidem!");
       return;
     }
@@ -37,12 +37,17 @@ export default function ApplicationForm() {
           "Content-Type": "application/json",
           Authorization: "9fMD5VvEzQShteBFutyWw33f",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       }
     );
+    
+    console.log("Status HTTP:", res.status); // <-- aqui você vê 200, 400, 500 etc
+    console.log("Resposta completa:", res);
+
 
     if (res.ok) {
       alert("Conta criada com sucesso!");
+      reset();
     } else {
       alert("Erro ao criar conta");
     }
@@ -50,73 +55,132 @@ export default function ApplicationForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-md bg-white p-8 border-gray-200 "
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-lg max-w-xl bg-white p-8"
     >
-      <div className="flex flex-col items-center mb-6">
-        <div className="w-14 h-14 rounded-full border flex items-center justify-center text-gray-400">
-          👤
+      <div className="flex flex-col mb-4">
+        <div className="w-14 h-14 rounded-full border flex items-center justify-center shadow-xl text-gray-400">
+          <img src="./icone-usuario.png" alt="icone usuario" />
         </div>
         <h2 className="text-2xl font-bold mt-4">Criar nova conta</h2>
-        <p className="text-gray-500 text-sm text-center mt-2">
+        <p className="text-gray-500 text-left text-sm mt-2">
           Preencha os campos do formulário abaixo para criar uma conta na Ecto
           Tools:
         </p>
       </div>
 
-      <div className="space-y-4">
+      {/* Nome */}
+      <div className="mb-4">
+        <p className="text-sm font-semibold">Nome</p>
         <input
           type="text"
-          name="name"
+          {...register("name", { required: "O nome é obrigatório" })}
           placeholder="Escreva seu nome"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
+          className={`w-lg p-2 border rounded-lg shadow-sm ${errors.name ? "border-red-500" : "border-gray-400"
+            }`}
         />
+        {errors.name && (
+          <span className="text-red-500 text-xs">{errors.name.message}</span>
+        )}
+      </div>
+
+      {/* Email */}
+      <div className="mb-4">
+        <p className="text-sm font-semibold">E-mail</p>
         <input
           type="email"
-          name="email"
+          {...register("email", {
+            required: "O email é obrigatório",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Digite um email válido",
+            },
+          })}
           placeholder="exemplo@email.com"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
+          className={`w-lg p-2 border rounded-lg shadow-sm ${errors.email ? "border-red-500" : "border-gray-400"
+            }`}
         />
+        {errors.email && (
+          <span className="text-red-500 text-xs">{errors.email.message}</span>
+        )}
+      </div>
+
+      {/* Telefone */}
+      <div className="mb-4">
+        <p className="text-sm font-semibold">Telefone</p>
         <input
           type="tel"
-          name="phone"
+          {...register("phone", { required: "O telefone é obrigatório" })}
           placeholder="+55 (00) 00000-0000"
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
+          className={`w-lg p-2 border rounded-lg shadow-sm ${errors.phone ? "border-red-500" : "border-gray-400"
+            }`}
         />
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            required
-          />
-          <input
-            type="password"
-            name="confirm_password"
-            placeholder="Confirme sua senha"
-            value={formData.confirm_password}
-            onChange={handleChange}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            required
-          />
+        {errors.phone && (
+          <span className="text-red-500 text-xs">{errors.phone.message}</span>
+        )}
+      </div>
+
+      {/* Senha e Confirmar Senha lado a lado */}
+      <div className="flex flex-row mb-4">
+        {/* Senha */}
+        <div className="basis-4xs">
+          <label className="block text-sm font-medium mb-1">Senha</label>
+          <div className="flex">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password", { required: "Senha obrigatória" })}
+              className="flex-1 p-2 border border-gray-400 rounded-l-lg shadow-sm"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="px-3 border border-gray-400 rounded-r-lg text-sm font-semibold"
+            >
+              {showPassword ? "Ocultar" : "Mostrar"}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.password.message as string}
+            </p>
+          )}
+        </div>
+
+        {/* Confirmar Senha */}
+        <div className="basis-4xs ml-4">
+          <label className="block text-sm font-medium mb-1">
+            Confirme sua senha
+          </label>
+          <div className="flex">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirm_password", {
+                required: "Confirmação obrigatória",
+                validate: (value) =>
+                  value === watch("password") || "As senhas não coincidem",
+              })}
+              className="flex-1 p-2 border border-gray-400 rounded-l-lg shadow"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="px-3 border border-gray-400 rounded-r-lg text-sm font-semibold"
+            >
+              {showConfirmPassword ? "Ocultar" : "Mostrar"}
+            </button>
+          </div>
+          {errors.confirm_password && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.confirm_password.message as string}
+            </p>
+          )}
         </div>
       </div>
 
+      {/* Botão */}
       <button
         type="submit"
-        className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
+        className="mt-6 w-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
       >
         Cadastrar conta
       </button>
