@@ -4,11 +4,14 @@ export default function App() {
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 p-5">
       {/* CONTAINER ESQUERDA */}
-      <div className="flex flex-col justify-between p-7 bg-white ">
+      <div className="flex flex-col justify-between p-7 bg-white">
         {/* HEADER */}
         <header className="flex justify-between items-center mb-8">
           <img src="/logo-ecto.png" alt="Ecto" className="h-8" />
-          <a href="#" className="text-sm text-black">
+          <a
+            href="#"
+            className="text-sm text-black max-[640px]:text-xs max-[640px]:ml-2"
+          >
             Falar com um especialista
           </a>
         </header>
@@ -19,16 +22,21 @@ export default function App() {
         </main>
 
         {/* FOOTER */}
-        <footer className="flex justify-between text-xs mt-8 font-">
-          <a href="#" className="text-black">Políticas de privacidade</a>
-          <a href="#" className="text-black">Termos de uso</a>
-          <span className="text-gray-400"> Teste de estágio 2025</span>
+        <footer className="flex flex-col items-center gap-2 text-xs mt-8 sm:flex-row sm:justify-between">
+          <div className="flex gap-4">
+            <a href="#" className="text-black">
+              Políticas de privacidade
+            </a>
+            <a href="#" className="text-black">
+              Termos de uso
+            </a>
+          </div>
+          <span className="text-gray-400">Teste de estágio 2025</span>
         </footer>
       </div>
 
       {/* CONTAINER DIREITA */}
-      <div className="lg:flex items-end-safe justify-center bg-[url('imagem.png')] bg-cover bg-center rounded-xl p-10 relative">
-
+      <div className="hidden lg:flex items-end justify-center bg-[url('imagem.png')] bg-cover bg-center rounded-xl p-10 relative">
         {/* EFEITO GRADIANTE */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#101b2b] to-transparent rounded-xl"></div>
 

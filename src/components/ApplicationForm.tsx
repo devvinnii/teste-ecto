@@ -18,12 +18,10 @@ export default function ApplicationForm() {
     reset,
   } = useForm<FormData>();
 
-  // mostrar/ocultar senhas
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit = async (data: FormData) => {
-    // Verifica se as senhas coincidem antes de enviar
     if (data.password !== data.confirm_password) {
       alert("As senhas não coincidem!");
       return;
@@ -40,10 +38,6 @@ export default function ApplicationForm() {
         body: JSON.stringify(data),
       }
     );
-    
-    console.log("Status HTTP:", res.status); // <-- aqui você vê 200, 400, 500 etc
-    console.log("Resposta completa:", res);
-
 
     if (res.ok) {
       alert("Conta criada com sucesso!");
@@ -56,8 +50,9 @@ export default function ApplicationForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-lg max-w-xl bg-white p-8"
+      className="w-full max-w-xl bg-white p-8"
     >
+      {/* Cabeçalho */}
       <div className="flex flex-col mb-4">
         <div className="w-14 h-14 rounded-full border flex items-center justify-center shadow-xl text-gray-400">
           <img src="./icone-usuario.png" alt="icone usuario" />
@@ -76,8 +71,9 @@ export default function ApplicationForm() {
           type="text"
           {...register("name", { required: "O nome é obrigatório" })}
           placeholder="Escreva seu nome"
-          className={`w-lg p-2 border rounded-lg shadow-sm ${errors.name ? "border-red-500" : "border-gray-400"
-            }`}
+          className={`w-full p-2 border rounded-lg shadow-sm ${
+            errors.name ? "border-red-500" : "border-gray-400"
+          }`}
         />
         {errors.name && (
           <span className="text-red-500 text-xs">{errors.name.message}</span>
@@ -97,8 +93,9 @@ export default function ApplicationForm() {
             },
           })}
           placeholder="exemplo@email.com"
-          className={`w-lg p-2 border rounded-lg shadow-sm ${errors.email ? "border-red-500" : "border-gray-400"
-            }`}
+          className={`w-full p-2 border rounded-lg shadow-sm ${
+            errors.email ? "border-red-500" : "border-gray-400"
+          }`}
         />
         {errors.email && (
           <span className="text-red-500 text-xs">{errors.email.message}</span>
@@ -112,24 +109,25 @@ export default function ApplicationForm() {
           type="tel"
           {...register("phone", { required: "O telefone é obrigatório" })}
           placeholder="+55 (00) 00000-0000"
-          className={`w-lg p-2 border rounded-lg shadow-sm ${errors.phone ? "border-red-500" : "border-gray-400"
-            }`}
+          className={`w-full p-2 border rounded-lg shadow-sm ${
+            errors.phone ? "border-red-500" : "border-gray-400"
+          }`}
         />
         {errors.phone && (
           <span className="text-red-500 text-xs">{errors.phone.message}</span>
         )}
       </div>
 
-      {/* Senha e Confirmar Senha lado a lado */}
-      <div className="flex flex-row mb-4">
+      {/* Senhas */}
+      <div className="flex flex-col sm:flex-row gap-4 mb-4">
         {/* Senha */}
-        <div className="basis-4xs">
+        <div className="flex-1">
           <label className="block text-sm font-medium mb-1">Senha</label>
           <div className="flex">
             <input
               type={showPassword ? "text" : "password"}
               {...register("password", { required: "Senha obrigatória" })}
-              className="flex-1 p-2 border border-gray-400 rounded-l-lg shadow-sm"
+              className="w-full p-2 border border-gray-400 rounded-l-lg shadow-sm"
             />
             <button
               type="button"
@@ -147,7 +145,7 @@ export default function ApplicationForm() {
         </div>
 
         {/* Confirmar Senha */}
-        <div className="basis-4xs ml-4">
+        <div className="flex-1">
           <label className="block text-sm font-medium mb-1">
             Confirme sua senha
           </label>
@@ -159,11 +157,13 @@ export default function ApplicationForm() {
                 validate: (value) =>
                   value === watch("password") || "As senhas não coincidem",
               })}
-              className="flex-1 p-2 border border-gray-400 rounded-l-lg shadow"
+              className="w-full p-2 border border-gray-400 rounded-l-lg shadow-sm"
             />
             <button
               type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
               className="px-3 border border-gray-400 rounded-r-lg text-sm font-semibold"
             >
               {showConfirmPassword ? "Ocultar" : "Mostrar"}
@@ -180,7 +180,7 @@ export default function ApplicationForm() {
       {/* Botão */}
       <button
         type="submit"
-        className="mt-6 w-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
+        className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
       >
         Cadastrar conta
       </button>
