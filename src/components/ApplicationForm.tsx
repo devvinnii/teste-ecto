@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import iconeUsuario from '/icone-usuario.png';
 
 interface FormData {
   name: string;
@@ -45,6 +46,7 @@ export default function ApplicationForm() {
     } else {
       alert("Erro ao criar conta");
     }
+    console.log("Status HTTP:", res.status);
   };
 
   return (
@@ -55,7 +57,7 @@ export default function ApplicationForm() {
       {/* Cabeçalho */}
       <div className="flex flex-col mb-4">
         <div className="w-14 h-14 rounded-full border flex items-center justify-center shadow-xl text-gray-400">
-          <img src="./icone-usuario.png" alt="icone usuario" />
+          <img src={iconeUsuario} alt="icone usuario" />
         </div>
         <h2 className="text-2xl font-bold mt-4">Criar nova conta</h2>
         <p className="text-gray-500 text-left text-sm mt-2">
@@ -71,9 +73,8 @@ export default function ApplicationForm() {
           type="text"
           {...register("name", { required: "O nome é obrigatório" })}
           placeholder="Escreva seu nome"
-          className={`w-full p-2 border rounded-lg shadow-sm ${
-            errors.name ? "border-red-500" : "border-gray-400"
-          }`}
+          className={`w-full p-2 border rounded-lg shadow-sm ${errors.name ? "border-red-500" : "border-gray-400"
+            }`}
         />
         {errors.name && (
           <span className="text-red-500 text-xs">{errors.name.message}</span>
@@ -93,9 +94,8 @@ export default function ApplicationForm() {
             },
           })}
           placeholder="exemplo@email.com"
-          className={`w-full p-2 border rounded-lg shadow-sm ${
-            errors.email ? "border-red-500" : "border-gray-400"
-          }`}
+          className={`w-full p-2 border rounded-lg shadow-sm ${errors.email ? "border-red-500" : "border-gray-400"
+            }`}
         />
         {errors.email && (
           <span className="text-red-500 text-xs">{errors.email.message}</span>
@@ -109,9 +109,8 @@ export default function ApplicationForm() {
           type="tel"
           {...register("phone", { required: "O telefone é obrigatório" })}
           placeholder="+55 (00) 00000-0000"
-          className={`w-full p-2 border rounded-lg shadow-sm ${
-            errors.phone ? "border-red-500" : "border-gray-400"
-          }`}
+          className={`w-full p-2 border rounded-lg shadow-sm ${errors.phone ? "border-red-500" : "border-gray-400"
+            }`}
         />
         {errors.phone && (
           <span className="text-red-500 text-xs">{errors.phone.message}</span>

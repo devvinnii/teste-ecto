@@ -1,4 +1,6 @@
+
 import ApplicationForm from "./components/ApplicationForm";
+import logoEcto from '/logo-ecto.png';
 
 export default function App() {
   return (
@@ -7,7 +9,7 @@ export default function App() {
       <div className="flex flex-col justify-between p-7 bg-white">
         {/* HEADER */}
         <header className="flex justify-between items-center mb-8">
-          <img src="/logo-ecto.png" alt="Ecto" className="h-8" />
+          <img src={logoEcto} alt="Ecto" className="h-8" />
           <a
             href="#"
             className="text-sm text-black max-[640px]:text-xs max-[640px]:ml-2"
@@ -36,7 +38,8 @@ export default function App() {
       </div>
 
       {/* CONTAINER DIREITA */}
-      <div className="hidden lg:flex items-end justify-center bg-[url('imagem.png')] bg-cover bg-center rounded-xl p-10 relative">
+      <div className="hidden lg:flex items-end justify-center bg-cover bg-center rounded-xl p-10 relative"
+        style={{ backgroundImage: 'url(/teste-ecto/imagem.png)' }}>
         {/* EFEITO GRADIANTE */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#101b2b] to-transparent rounded-xl"></div>
 
