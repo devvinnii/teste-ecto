@@ -2,6 +2,7 @@
 import ApplicationForm from "./components/ApplicationForm";
 import logoEcto from '/logo-ecto.png';
 
+
 export default function App() {
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 p-5">
@@ -38,19 +39,19 @@ export default function App() {
       </div>
 
       {/* CONTAINER DIREITA */}
-     <div
-  className="hidden lg:flex items-end justify-center bg-cover bg-center rounded-xl p-10 relative"
-  style={{ backgroundImage: `url(${imagem})` }}
->
-        {/* EFEITO GRADIANTE */}
+      <div
+        className="hidden lg:flex items-end justify-center bg-cover bg-center rounded-xl p-10 relative"
+        style={{ backgroundImage: "url(/imagem.png)" }}
+      >
+        {/* EFEITO GRADIENTE */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#101b2b] to-transparent rounded-xl"></div>
 
         <div className="relative text-left text-white max-w-3xl">
           <h2 className="text-4xl font-bold mb-4">Tudo em um só lugar</h2>
           <p className="text-sm opacity-90">
             Tenha visibilidade total da operação de SEO, mídia e conteúdo com a
-            Ecto Tools - nossa plataforma exclusiva para acompanhar entregas,
-            dados e performance em tempo real.
+            Ecto Tools - nossa plataforma exclusiva para acompanhar entregas, dados e
+            performance em tempo real.
           </p>
         </div>
       </div>
