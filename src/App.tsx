@@ -41,7 +41,7 @@ export default function App() {
       {/* CONTAINER DIREITA */}
       <div
         className="hidden lg:flex items-end justify-center bg-cover bg-center rounded-xl p-10 relative"
-        style={{ backgroundImage: "url(/imagem.png)" }}
+        style={{ backgroundImage: "url(/foto-azul.png)" }}
       >
         {/* EFEITO GRADIENTE */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#101b2b] to-transparent rounded-xl"></div>
